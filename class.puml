@@ -1,0 +1,103 @@
+@startuml
+left to right direction
+hide empty members
+
+abstract class Pokemon{
+-ID: int
+-nombre: String
+-etapa: String
+-tipo1: String
+-tipo2: String
++Pokemon(ID: int, nombre: String, etapa: String, tipo1: String, tipo2: String)
++getID(): int
++getNombre(): String
++getEtapa(): String
++getTipo1(): String
++getTipo2(): String
+}
+
+class PokemonBasico{
+-evolucion1: String
+-evolucion2: String
++PokemonBasico()
++PokemonBasico(evolucion1: String)
++PokemonBasico(evolucion1: String, evolucion2: String)
++getEvolucion1(): String
++getEvolucion2(): String
+}
+
+class PokemonPrimeraEvolucion{
+-etapaBasica: String
+-segundaEvolucion: String
++PokemonPrimeraEvolucion(etapaBasica: String)
++PokemonPrimeraEvolucion(etapaBasica: String, segundaEvolucion: String)
++getEtapaBasica(): String
++getSegundaEvolucion(): String
+}
+
+class PokemonSegundaEvolucion{
+-primeraEvolucion: String
+-etapaBasica: String
++PokemonSegundaEvolucion(primeraEvolucion: String, etapaBasica: String)
++getEtapaBasica(): String
++getPrimeraEvolucion(): String
+}
+class ListaNexoSimplePokemon{
+-cabeza: NodoPokemon
++ListaNexoSimplePokemon()
++agregar(pokemon: Pokemon): void
++toArray(): ArrayList<Pokemon>
++toLinked(): LinkedList<Pokemon>
+}
+class NodoPokemon{
+-pokemon: Pokemon
+-siguiente: NodoPokemon
++NodoPokemon(pokemon: Pokemon)
++getPokemon(): Pokemon
++getSiguiente(): NodoPokemon
++setSiguiente(siguiente: NodoPokemon): void
+}
+class PokemonComparatorIDCreciente{
++compare(o1: Pokemon, o2: Pokemon): int
+}
+class PokemonComparatorIDDecreciente{
++compare(o2: Pokemon, o1: Pokemon): int
+}
+class PokemonComparatorOrdenAlfabetico{
++compare(o1: Pokemon, o2: Pokemon): int
+}
+class PokedexImpl{
+-listaPokemon: ListaNexoSimplePokemon
++PokedexImpl()
++iniciar(): void
++lecturaDeArchivo(): void
++validarEntero(numeroString: String): int
++sinEspacio(conEspacio: String): String
++desplegarPokemonPorRango(listIterator: ListIterator<Pokemon>, menor: int, mayor: int): void
++desplegarPokemon(pokemon: Pokemon): void
++desplegarPokemonPorNombre(nombre: String): void
++desplegarPokemonPorID(id: int): void
++pokemonEncontrado(pokemonEncontrado: Pokemon): void
++informacionPokemon(nombre: String): void
+}
+interface Pokedex <<interface>> {
++desplegarPorRango(numero1: int, numero2: int): void
++desplegarPokemonPorLetra(): void
++desplegarPokemonPorTipo(tipo: String): void
++desplegarPrimeraEvolucion(): void
++busquedaPersonalizada(): void
+}
+
+NodoPokemon "1"-->"1" NodoPokemon : apunta
+ListaNexoSimplePokemon "1"-->"1" NodoPokemon : cabeza: NodoPokemon
+PokedexImpl ..|> Pokedex : implementa
+PokemonBasico --|> Pokemon : hereda
+PokemonPrimeraEvolucion --|> Pokemon : hereda
+PokemonSegundaEvolucion --|> Pokemon : hereda
+NodoPokemon "1"-->"1" Pokemon : pokemon: Pokemon
+PokedexImpl "1"-->"1" ListaNexoSimplePokemon : listaPokemon: ListaNexoSimplePokemon
+PokedexImpl "1"-->"1" PokemonComparatorIDCreciente : utiliza
+PokedexImpl "1"-->"1" PokemonComparatorIDDecreciente : utiliza
+PokedexImpl "1"-->"1" PokemonComparatorOrdenAlfabetico : utiliza
+
+@enduml
