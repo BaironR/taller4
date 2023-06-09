@@ -1,4 +1,3 @@
-
 import java.util.ArrayList;
 import java.util.LinkedList;
 
@@ -33,9 +32,17 @@ public class ListaNexoSimplePokemon {
 
         NodoPokemon aux = this.cabeza;
 
+        if (aux.getPokemon().getID() == pokemonNuevo.getPokemon().getID()){
+            return;
+        }
+
         while (aux.getSiguiente() != null){
 
             aux = aux.getSiguiente();
+
+            if (aux.getPokemon().getID() == pokemonNuevo.getPokemon().getID()){
+                return;
+            }
         }
 
         aux.setSiguiente(pokemonNuevo);
