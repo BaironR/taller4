@@ -123,7 +123,12 @@ public class PokedexImpl implements Pokedex{
         ArrayList<Pokemon> arrayList = listaPokemon.toArray();
 
         if (arrayList != null){
-            arrayList.sort(new PokemonComparatorIDCreciente());
+
+            if (menor >= arrayList.size()){
+                return;
+            }
+
+            arrayList = (ArrayList<Pokemon>) sortIDCreciente(arrayList);
 
             ListIterator<Pokemon> listIterator;
 
@@ -149,7 +154,7 @@ public class PokedexImpl implements Pokedex{
         LinkedList<Pokemon> linkedList = listaPokemon.toLinked();
 
         if (linkedList != null){
-            linkedList.sort(new PokemonComparatorOrdenAlfabetico());
+            linkedList = (LinkedList<Pokemon>) sortOrdenAlfabetico(linkedList);
             ListIterator<Pokemon> listIterator = linkedList.listIterator();
             StdOut.println("********************** Pokemons **********************\n");
 
@@ -173,7 +178,8 @@ public class PokedexImpl implements Pokedex{
         LinkedList<Pokemon> linkedList = listaPokemon.toLinked();
 
         if (linkedList != null) {
-            linkedList.sort(new PokemonComparatorIDCreciente());
+
+            linkedList = (LinkedList<Pokemon>) sortIDCreciente(linkedList);
 
             for (Pokemon pokemon : linkedList) {
                 if (pokemon.getTipo1().equalsIgnoreCase(tipo) || pokemon.getTipo2().equalsIgnoreCase(tipo)) {
@@ -185,18 +191,73 @@ public class PokedexImpl implements Pokedex{
         }
     }
 
-    /**
-     * Desplegar pokemons en su primera evolucion
-     */
+    public List<Pokemon> sortIDCreciente(List<Pokemon> lista){
+
+        for(int i = 0; i<(lista.size()-1); i++){
+
+            for (int j = (i+1); j<lista.size(); j++){
+
+                if (lista.get(i).getID() > lista.get(j).getID()){
+
+                    Pokemon aux = lista.get(j);
+                    lista.set(j,lista.get(i));
+                    lista.set(i,aux);
+                }
+            }
+        }
+
+        return lista;
+    }
+
+    public List<Pokemon> sortIDDecreciente(List<Pokemon> lista){
+
+        for(int i = 0; i<(lista.size()-1); i++){
+
+            for (int j = (i+1); j<lista.size(); j++){
+
+                if (lista.get(i).getID() < lista.get(j).getID()){
+
+                    Pokemon aux = lista.get(j);
+                    lista.set(j,lista.get(i));
+                    lista.set(i,aux);
+                }
+            }
+        }
+
+        return lista;
+    }
+
+    public List<Pokemon> sortOrdenAlfabetico(List<Pokemon> lista) {
+
+        for (int i = 0; i < (lista.size() - 1); i++) {
+
+            for (int j = (i + 1); j < lista.size(); j++) {
+
+                if (lista.get(i).getNombre().compareTo(lista.get(j).getNombre()) > 0) {
+
+                    Pokemon aux = lista.get(j);
+                    lista.set(j, lista.get(i));
+                    lista.set(i, aux);
+                }
+            }
+        }
+
+        return lista;
+    }
+
+
+        /**
+         * Desplegar pokemons en su primera evolucion
+         */
     @Override
     public void desplegarPrimeraEvolucion() {
 
-        ArrayList<Pokemon> linkedList = listaPokemon.toArray();
+        ArrayList<Pokemon> arrayList = listaPokemon.toArray();
 
-        if (linkedList != null) {
-            linkedList.sort(new PokemonComparatorIDDecreciente());
+        if (arrayList != null) {
+            arrayList = (ArrayList<Pokemon>) sortIDDecreciente(arrayList);
 
-            for (Pokemon pokemon : linkedList) {
+            for (Pokemon pokemon : arrayList) {
                 if (pokemon.getEtapa().equalsIgnoreCase("Primera Evolucion")) {
                     desplegarPokemon(pokemon);
                 }
