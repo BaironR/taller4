@@ -57,15 +57,7 @@ class NodoPokemon{
 +getSiguiente(): NodoPokemon
 +setSiguiente(siguiente: NodoPokemon): void
 }
-class PokemonComparatorIDCreciente{
-+compare(o1: Pokemon, o2: Pokemon): int
-}
-class PokemonComparatorIDDecreciente{
-+compare(o2: Pokemon, o1: Pokemon): int
-}
-class PokemonComparatorOrdenAlfabetico{
-+compare(o1: Pokemon, o2: Pokemon): int
-}
+
 class PokedexImpl{
 -listaPokemon: ListaNexoSimplePokemon
 +PokedexImpl()
@@ -79,6 +71,9 @@ class PokedexImpl{
 +desplegarPokemonPorID(id: int): void
 +pokemonEncontrado(pokemonEncontrado: Pokemon): void
 +informacionPokemon(nombre: String): void
++sortOrdenAlfabetico(lista: List<Pokemon>): List<Pokemon>
++sortIDCreciente(lista: List<Pokemon>): List<Pokemon>
++sortIDDecreciente(lista: List<Pokemon>): List<Pokemon>
 }
 interface Pokedex <<interface>> {
 +desplegarPorRango(numero1: int, numero2: int): void
@@ -96,8 +91,6 @@ PokemonPrimeraEvolucion --|> Pokemon : hereda
 PokemonSegundaEvolucion --|> Pokemon : hereda
 NodoPokemon "1"-->"1" Pokemon : pokemon: Pokemon
 PokedexImpl "1"-->"1" ListaNexoSimplePokemon : listaPokemon: ListaNexoSimplePokemon
-PokedexImpl "1"-->"1" PokemonComparatorIDCreciente : utiliza
-PokedexImpl "1"-->"1" PokemonComparatorIDDecreciente : utiliza
-PokedexImpl "1"-->"1" PokemonComparatorOrdenAlfabetico : utiliza
+
 
 @enduml
